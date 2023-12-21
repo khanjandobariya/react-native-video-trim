@@ -1,3 +1,8 @@
+forked from [maitrungduc1410/react-native-video-trim](https://github.com/maitrungduc1410/react-native-video-trim)
+
+changes from original library:
+- min duration. (android only)
+
 # React Native Video Trim
 <div align="center">
 <h2>Video trimmer for your React Native app</h2>
@@ -147,6 +152,7 @@ Main method to show Video Editor UI.
 
   - `saveToPhoto` (optional, `default = true`): whether to save video to photo/gallery after editing
   - `maxDuration` (optional): maximum duration for the trimmed video
+  - `minDuration` (optional): minimum duration for the trimmed video (android only)
   - `cancelButtonText` (optional): text of left button in Editor dialog
   - `saveButtonText` (optional): text of right button in Editor dialog
   - `title` (optional, iOS only): title of Editor dialog

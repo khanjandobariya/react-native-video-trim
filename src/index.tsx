@@ -20,6 +20,7 @@ const VideoTrim = NativeModules.VideoTrim
 export interface EditorConfig {
   saveToPhoto?: boolean;
   maxDuration?: number;
+  minDuration?: number; // android only
   title?: string;
   cancelButtonText?: string;
   saveButtonText?: string;

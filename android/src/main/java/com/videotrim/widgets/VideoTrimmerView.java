@@ -80,7 +80,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
   private ValueAnimator mRedProgressAnimator;
   private Handler mAnimationHandler = new Handler();
   private Boolean mIsPrepared = false;
-  private int mMaxDuration = 0;
+  private int mMaxDuration = 0, mMinDuration = 0;
 
 
   public VideoTrimmerView(ReactApplicationContext context, AttributeSet attrs) {
@@ -138,7 +138,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     mRangeSeekBarView.setSelectedMinValue(mLeftProgressPos);
     mRangeSeekBarView.setSelectedMaxValue(mRightProgressPos);
     mRangeSeekBarView.setStartEndTime(mLeftProgressPos, mRightProgressPos);
-    mRangeSeekBarView.setMinShootTime(VideoTrimmerUtil.MIN_SHOOT_DURATION);
+    mRangeSeekBarView.setMinShootTime(VideoTrimmerUtil.minShootDuration);
     mRangeSeekBarView.setNotifyWhileDragging(true);
     mRangeSeekBarView.setOnRangeSeekBarChangeListener(mOnRangeSeekBarChangeListener);
     mSeekBarLayout.addView(mRangeSeekBarView);
@@ -190,6 +190,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     mDuration = mVideoView.getDuration();
 
     VideoTrimmerUtil.maxShootDuration = mMaxDuration > 0 ? Math.min(mMaxDuration * 1000L, mDuration) : mDuration;
+    VideoTrimmerUtil.minShootDuration = mMinDuration > 0 ? Math.min(mMinDuration * 1000L, mDuration) : VideoTrimmerUtil.minShootDuration;
 
     MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
     mediaMetadataRetriever.setDataSource(mContext, mSourceUri);
@@ -294,8 +295,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
   }
 
   private void onSaveClicked() {
-    if (mRightProgressPos - mLeftProgressPos < VideoTrimmerUtil.MIN_SHOOT_DURATION) {
-      Toast.makeText(mContext, "Video shorter than 3s, can't proceed", Toast.LENGTH_SHORT).show();
+    if (mRightProgressPos - mLeftProgressPos < VideoTrimmerUtil.minShootDuration) {
+      Toast.makeText(mContext, "Video shorter than "+VideoTrimmerUtil.minShootDuration+"s, can't proceed", Toast.LENGTH_SHORT).show();
     } else {
       mVideoView.pause();
       VideoTrimmerUtil.trim(mContext,
@@ -491,6 +492,10 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
   private void configure(ReadableMap config) {
     if (config.hasKey("maxDuration")) {
       this.mMaxDuration = config.getInt("maxDuration");
+    }
+
+    if (config.hasKey("minDuration")) {
+      this.mMinDuration = config.getInt("minDuration");
     }
 
     if (config.hasKey("cancelButtonText")) {

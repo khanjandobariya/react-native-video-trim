@@ -23,7 +23,7 @@ import iknow.android.utils.thread.BackgroundExecutor;
 public class VideoTrimmerUtil {
 
   private static final String TAG = VideoTrimmerUtil.class.getSimpleName();
-  public static final long MIN_SHOOT_DURATION = 3000L;// min 3 seconds for trimming
+  public static long minShootDuration = 3 * 1000L;// default min 3 seconds for trimming
 //  public static final int VIDEO_MAX_TIME = 10;// max 10 seconds for trimming
 //  public static final long MAX_SHOOT_DURATION = VIDEO_MAX_TIME * 1000L;
   public static long maxShootDuration = 10 * 1000L;

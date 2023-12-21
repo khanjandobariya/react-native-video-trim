@@ -33,7 +33,7 @@ public class RangeSeekBarView extends View {
   private static final int paddingTop = UnitConverter.dpToPx(10);
   private int mActivePointerId = INVALID_POINTER_ID;
 
-  private long mMinShootTime = VideoTrimmerUtil.MIN_SHOOT_DURATION;
+  private long mMinShootTime = VideoTrimmerUtil.minShootDuration;
   private double absoluteMinValuePrim, absoluteMaxValuePrim;
   private double normalizedMinValue = 0d;//点坐标占总长度的比例值，范围从0-1
   private double normalizedMaxValue = 1d;//点坐标占总长度的比例值，范围从0-1
